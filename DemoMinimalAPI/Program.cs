@@ -39,7 +39,7 @@ app.MapGet("/fornecedor/{id}", async (
     .WithName("GetFornecedorPorId")
     .WithTags("Fornecedor");
 
-app.MapPost("/fornecedor/", async (
+app.MapPost("/fornecedor", async (
     MinimalContextDb context,
     Fornecedor fornecedor) =>
 {
@@ -49,9 +49,9 @@ app.MapPost("/fornecedor/", async (
     context.Fornecedores.Add(fornecedor);
     var result = await context.SaveChangesAsync();
 
-    return result > 0 
+    return result > 0
     //? Results.Created($"/fornecedor/{fornecedor.Id}", fornecedor)
-    ? Results.CreatedAtRoute("GetFornecedorPorId", new {id = fornecedor.Id}, fornecedor)
+    ? Results.CreatedAtRoute("GetFornecedorPorId", new { id = fornecedor.Id }, fornecedor)
     : Results.BadRequest("Houve um problema ao salvar o registro");
 })
     .ProducesValidationProblem()
